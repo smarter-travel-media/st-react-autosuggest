@@ -32,9 +32,9 @@ module.exports = function(grunt, configs) {
    * This task will take care of running other tasks in the right order, specified below:
    *     - clean:npm - Enabled by default, can be disabled with "disableClean".
    *     - test - Enabled by default, can be disabled with "disableTests".
+   *     - run:babel - Will always run. This transpiles and code before publishing.
    *     - bump:{versionType} - Enabled by default with the versionType being "patch". To specify a different type,
    *         use "enableBump(versionType)". To disable, use "disableBump".
-   *     - copy:npm - Will always run.
    *     - package:npm - Will always run.
    *     - publish:npm - Enabled by default, can be disabled with "disablePublish".
    *
@@ -56,7 +56,6 @@ module.exports = function(grunt, configs) {
           ["test", !_.contains(flags, "disableTests")],
           ["run:babel", true],
           getBumpTaskConfigs(flags),
-          ["copy:npm", true],
           ["package:npm", true],
           ["publish:npm", !_.contains(flags, "disablePublish")]
         ];
