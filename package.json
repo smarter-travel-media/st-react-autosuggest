@@ -1,5 +1,5 @@
 {
-  "name": "st-autosuggest",
+  "name": "st-react-autosuggest",
   "version": "0.2.0",
   "description": "An autosuggest view with plugable backing source",
   "author": "SmarterTravel",

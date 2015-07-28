@@ -3,13 +3,18 @@
 ## Description
 This is a heavily abstracted autosuggest built on 'react-autosuggest'. All properties passed to this component will be passed down to the underlying autosuggest except for 'suggestions' as it is going to be provided by out backing AutosuggestStore.
 
-####Usage
+###Usage
 This autosuggest requires an implementation of 'src/lib/store/autosuggestStore' passed as a property.
 
 ```js
 import {AutosuggestUI, AutosuggestStaticStore} from "st-autosuggest";
 <AutosuggestUI autosuggestStore={new AutosuggestStaticStore()} />
 ```
+
+###Options
+
+####autosuggestStore {AutoSuggestStore} required
+A js class that extends AutosuggestStore.
 
 For a full list of properties that this component supports see the underlying autosuggest [options](https://github.com/moroshko/react-autosuggest#options)
 
