@@ -7,7 +7,7 @@ This is a heavily abstracted autosuggest built on 'react-autosuggest'. All prope
 This autosuggest requires an implementation of 'src/lib/store/autosuggestStore' passed as a property.
 
 ```js
-import {AutosuggestUI, AutosuggestStaticStore} from "st-autosuggest";
+import {AutosuggestUI, AutosuggestStaticStore} from "st-react-autosuggest";
 <AutosuggestUI autosuggestStore={new AutosuggestStaticStore()} />
 ```
 
