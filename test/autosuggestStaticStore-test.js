@@ -8,7 +8,7 @@ describe("AutosuggestStaticStore", function () {
       done();
     };
 
-    var autosuggestStore = new AutosuggestStaticStore(["Boston"]);
+    var autosuggestStore = new AutosuggestStaticStore();
     autosuggestStore.getSuggestion("bos", cb);
   });
 
