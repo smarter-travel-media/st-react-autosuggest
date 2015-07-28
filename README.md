@@ -1,4 +1,4 @@
-# st-autosuggest
+# st-react-autosuggest
 
 ## Description
 This is a heavily abstracted autosuggest built on 'react-autosuggest'. All properties passed to this component will be passed down to the underlying autosuggest except for 'suggestions' as it is going to be provided by out backing AutosuggestStore.
