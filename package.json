@@ -45,7 +45,8 @@
     "mocha": "*",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",
-    "time-grunt": "1.2.1"
+    "time-grunt": "1.2.1",
+    "yuidocjs": "^0.8.1"
   },
   "engines": {
     "node": ">=0.10.25",
@@ -57,6 +58,7 @@
   },
   "scripts": {
     "test": "karma start",
-    "compile": "babel src --out-dir npm"
+    "compile": "babel src --out-dir npm",
+    "docs": "mkdir -p docs/st-react-autosuggest && yuidoc -e .js,.jsx && scp -r docs/st-react-autosuggest sites.smartertravel.net:/var/www/projects/projects/ && rm -rf docs"
   }
 }

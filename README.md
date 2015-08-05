@@ -34,6 +34,12 @@ grunt watch
 ```
 As you make changes to the code your files will be automatically linted and the unit tests will be run.
 
+### Generate docs
+To generate yui docs at http://sites.smartertravel.net/projects/st-react-datepicker/
+```bash
+npm run docs
+```
+
 ## Publishing NPM Module
 While the Grunt task will take care of publishing the NPM module, you would still need to setup the credentials on your
 machine to actually publish it. Begin, by adding the authentication token to your `.npmrc` file (this should be the one

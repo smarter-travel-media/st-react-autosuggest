@@ -1,0 +1,6 @@
+{
+  "options": {
+      "outdir": "docs/st-react-autosuggest",
+      "paths": ["src/", "src/**"]
+  }
+}
