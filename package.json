@@ -46,6 +46,7 @@
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",
     "time-grunt": "1.2.1",
+    "yuidoc-bootstrap-theme": "^1.0.6",
     "yuidocjs": "^0.8.1"
   },
   "engines": {

@@ -30,7 +30,6 @@ class AutosuggestStaticStore extends AutosuggestStore {
    * @param {Function} callback function that is called when results are recieved.
    *  @param {Error} callback.error an error if it occured
    *  @param {Array} callback.suggestions an array of suggestions
-   *            String, e.g.: 'Mentone' or Object, e.g.: { suburb: 'Mentone', postcode: '3194' }
    *    @param {Suggestion} callback.suggestions.suggestion  A suggestions is String, e.g.: 'Mentone' or Object, e.g.: { suburb: 'Mentone', postcode: '3194' }
    */
   getSuggestion(suggestion, callback) {
