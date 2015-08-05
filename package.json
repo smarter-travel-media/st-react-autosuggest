@@ -1,6 +1,6 @@
 {
   "name": "st-react-autosuggest",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "An autosuggest view with plugable backing source",
   "author": "SmarterTravel",
   "main": "index.js",
