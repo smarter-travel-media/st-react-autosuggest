@@ -1,12 +1,12 @@
 {
   "name": "st-react-autosuggest",
-  "version": "0.2.3",
+  "version": "1.0.0",
   "description": "An autosuggest view with plugable backing source",
   "author": "SmarterTravel",
   "main": "index.js",
   "dependencies": {
-    "react": "^0.13.3",
-    "react-autosuggest": "^1.18.3"
+    "react": "^0.14.0",
+    "react-autosuggest": "^2.2.0"
   },
   "devDependencies": {
     "babel": "^5.6.23",
