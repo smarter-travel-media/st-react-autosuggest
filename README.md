@@ -16,6 +16,10 @@ import {AutosuggestUI, AutosuggestStaticStore} from "st-react-autosuggest";
 ####autosuggestStore {AutoSuggestStore} required
 A js class that extends AutosuggestStore.
 
+#### suggestionsOnlyOnInputChange {Boolean} optional
+Indicates if suggestions should be shown only when input changes. If it is true, it will only test "showWhen" method if the 
+input value is changed. False will propagate default behavior of underlying auto-suggest.
+
 For a full list of properties that this component supports see the underlying autosuggest [options](https://github.com/moroshko/react-autosuggest#options)
 
 ## Developing
