@@ -76,8 +76,6 @@ class AutosuggestComponent extends React.Component {
       wrappedProps.inputAttributes = {};
     }
 
-    wrappedProps.inputAttributes.onChange = this.onChange.bind(this);
-
     if (this.props.focusPlaceholder) {
       wrappedProps.inputAttributes.onFocus = this.onFocus;
       wrappedProps.inputAttributes.onBlur = this.onBlur;
@@ -105,17 +103,6 @@ class AutosuggestComponent extends React.Component {
     }
 
     return this.originalShowWhen(inputText);
-  }
-
-  /**
-   * Wrapper method to receive the changed value.
-   * @param value
-   */
-  onChange(value) {
-    this.lastValue = value;
-    if (this.props.inputAttributes && this.props.inputAttributes.onChange) {
-      this.props.inputAttributes.onChange(value);
-    }
   }
 
   onFocus(evt) {
