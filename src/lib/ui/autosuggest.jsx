@@ -16,10 +16,13 @@ class AutosuggestComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.originalShowWhen = this.props.showWhen;
-    this.originalOnSuggestionSelected = (this.props.onSuggestionSelected) ? this.props.onSuggestionSelected : null;
-    this.wrappedProps = this.wrapProps(this.props);
-    this.lastValue = this.valueFromProps(this.props);
+    this.state = {
+      originalOnSuggestionSelected: (this.props.onSuggestionSelected) ? this.props.onSuggestionSelected : null,
+      wrappedProps: this.wrapProps(this.props),
+      lastValue: this.valueFromProps(this.props),
+      justSelected: false,
+      value: this.valueFromProps(this.props)
+    };
   }
 
   /**
@@ -27,8 +30,12 @@ class AutosuggestComponent extends React.Component {
    * @param props new properties
      */
   componentWillReceiveProps(nextProps) {
-    this.wrappedProps = this.wrapProps(nextProps);
-    this.lastValue = this.valueFromProps(nextProps);
+    this.setState({
+      wrappedProps: this.wrapProps(nextProps),
+      lastValue: this.valueFromProps(nextProps),
+      justSelected: false,
+      value: this.valueFromProps(nextProps)
+    });
   }
 
   /**
@@ -37,7 +44,7 @@ class AutosuggestComponent extends React.Component {
    */
   render() {
     return (
-      <Autosuggest {...this.wrappedProps} suggestions={this.props.autosuggestStore.getSuggestion.bind(this.props.autosuggestStore)} />
+      <Autosuggest ref="suggest" {...this.state.wrappedProps} value={this.state.value} suggestions={this.props.autosuggestStore.getSuggestion.bind(this.props.autosuggestStore)} />
     );
   }
 
@@ -79,13 +86,17 @@ class AutosuggestComponent extends React.Component {
     }
 
     if (this.props.focusPlaceholder) {
-      wrappedProps.inputAttributes.onFocus = this.onFocus;
-      wrappedProps.inputAttributes.onBlur = this.onBlur;
+      wrappedProps.inputAttributes.onFocus = this.onFocus.bind(this);
+      wrappedProps.inputAttributes.onBlur = this.onBlur.bind(this);
     }
-
+    delete wrappedProps.value;
     return wrappedProps;
   }
 
+  componentDidMount() {
+    this.refs.suggest.refs.input.focus();
+    this.refs.suggest.refs.input.blur();
+  }
 
   /**
    * Wrapper method to prevent suggestion from showing if the underlying value hasn't changed.
@@ -99,32 +110,44 @@ class AutosuggestComponent extends React.Component {
    */
   showWhen(inputText) {
     if (this.props.suggestionsOnlyOnInputChange === true) {
-      if (inputText === this.lastValue) {
+      if (inputText === this.state.lastValue) {
         return false;
       }
     }
 
-    return this.originalShowWhen(inputText);
+    return this.props.showWhen(inputText);
   }
 
   onSuggestionSelected(selection, event) {
-    this.lastValue = this.props.suggestionValue(selection);
-    if (this.originalOnSuggestionSelected) {
-      this.originalOnSuggestionSelected(selection, event);
+    if (this.state.originalOnSuggestionSelected) {
+      this.state.originalOnSuggestionSelected(selection, event);
     }
+    this.setState({
+      lastValue: this.props.suggestionValue(selection),
+      justSelected: true
+    });
   }
 
   onFocus(evt) {
-    this.lastValueBeforeFocus = evt.target.value;
+    var value = evt.target.value;
+
+    if (this.state.justSelected) {
+      this.setState({
+        justSelected: false
+      });
+      return;
+    }
+
     this.setState({
-      value: this.props.focusPlaceholderText
+      value: this.props.focusPlaceholderText,
+      lastValueBeforeFocus: value
     });
   }
 
   onBlur(evt) {
     if (evt.target.value === this.props.focusPlaceholderText) {
       this.setState({
-        value: this.lastValueBeforeFocus
+        value: this.state.lastValueBeforeFocus
       });
     }
   }
