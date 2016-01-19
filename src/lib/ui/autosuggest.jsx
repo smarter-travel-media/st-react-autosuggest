@@ -17,6 +17,7 @@ class AutosuggestComponent extends React.Component {
   constructor(props) {
     super(props);
     this.originalShowWhen = this.props.showWhen;
+    this.originalOnSuggestionSelected = (this.props.onSuggestionSelected) ? this.props.onSuggestionSelected : null;
     this.wrappedProps = this.wrapProps(this.props);
     this.lastValue = this.valueFromProps(this.props);
   }
@@ -72,11 +73,10 @@ class AutosuggestComponent extends React.Component {
 
     //wrapped the methods of interests
     wrappedProps.showWhen = this.showWhen.bind(this);
+    wrappedProps.onSuggestionSelected = this.onSuggestionSelected.bind(this);
     if (!wrappedProps.inputAttributes) {
       wrappedProps.inputAttributes = {};
     }
-
-    wrappedProps.inputAttributes.onChange = this.onChange.bind(this);
 
     if (this.props.focusPlaceholder) {
       wrappedProps.inputAttributes.onFocus = this.onFocus;
@@ -107,14 +107,10 @@ class AutosuggestComponent extends React.Component {
     return this.originalShowWhen(inputText);
   }
 
-  /**
-   * Wrapper method to receive the changed value.
-   * @param value
-   */
-  onChange(value) {
-    this.lastValue = value;
-    if (this.props.inputAttributes && this.props.inputAttributes.onChange) {
-      this.props.inputAttributes.onChange(value);
+  onSuggestionSelected(selection, event) {
+    this.lastValue = this.props.suggestionValue(selection);
+    if (this.originalOnSuggestionSelected) {
+      this.originalOnSuggestionSelected(selection, event);
     }
   }
 
