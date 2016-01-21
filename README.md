@@ -4,7 +4,7 @@
 This is a heavily abstracted autosuggest built on 'st-react-typeahead-component'. All properties passed to this component will be passed down to the underlying autosuggest except for 'suggestions' as it is going to be provided by out backing AutosuggestStore.
 
 ## Updating st-react-typeahead-component
-This component depends on st-react-typeahead-component which is just [a forked repo](https://github.com/tappleby/react-typeahead-component) that must be manually published to npm.
+This component depends on st-react-typeahead-component which is just [a forked repo](https://github.com/fumblesandfriends/react-typeahead-component) that must be manually published to npm.
 
 To get artifactory access see the `Publishing NPM Module`
 
@@ -48,7 +48,7 @@ This autosuggest requires an implementation of 'src/lib/store/autosuggestStore' 
 
 
 #### OptionTemplate
-For what is available to the option template see the [readme](https://github.com/tappleby/react-typeahead-component/blob/master/README.md#reactelement-optiontemplate-required)
+For what is available to the option template see the [readme](https://github.com/fumblesandfriends/react-typeahead-component/blob/master/README.md#reactelement-optiontemplate-required)
 
 ```js
 
