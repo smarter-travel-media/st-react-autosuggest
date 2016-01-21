@@ -49,6 +49,7 @@ This autosuggest requires an implementation of 'src/lib/store/autosuggestStore' 
 
 #### OptionTemplate
 For what is available to the option template see the [readme](https://github.com/tappleby/react-typeahead-component/blob/master/README.md#reactelement-optiontemplate-required)
+
 ```js
 
 import React from "react";
@@ -119,6 +120,7 @@ import AutosuggestStaticStore from ...
 ```
 
 ###Options
+
 ```js
 
 /**
@@ -153,16 +155,21 @@ onSelected: React.PropTypes.func
 
 
 ## Developing
+
 Pull down all the devDependencies
+
 ```
 npm install
 ```
+
 To see the list of available grunt tasks
+
 ```
 grunt
 ```
 
 The watch task:
+
 ```bash
 grunt watch
 ```
@@ -170,6 +177,7 @@ As you make changes to the code your files will be automatically linted and the 
 
 ### Generate docs
 To generate yui docs at http://sites.smartertravel.net/projects/st-react-datepicker/
+
 ```bash
 npm run docs
 ```
