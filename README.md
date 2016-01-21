@@ -4,22 +4,51 @@
 This is a heavily abstracted autosuggest built on 'st-react-typeahead-component'. All properties passed to this component will be passed down to the underlying autosuggest except for 'suggestions' as it is going to be provided by out backing AutosuggestStore.
 
 ## Updating st-react-typeahead-component
-This component depends on st-react-typeahead-component which is just (a forked repo)[https://github.com/smarter-travel-media/react-typeahead-component] that must be manually published to npm.
+This component depends on st-react-typeahead-component which is just [a forked repo](https://github.com/tappleby/react-typeahead-component) that must be manually published to npm.
 
 To get artifactory access see the `Publishing NPM Module`
 
 - Checkout the repo
 - Make changes and change versions
 - Commit
+- Apply diff below
 - run `npm publish`
 
-###Usage
+### Patch file
+
+```text
+
+diff --git a/package.json b/package.json
+index e5a5756..2dfe69c 100644
+--- a/package.json
++++ b/package.json
+@@ -1,5 +1,5 @@
+ {
+-  "name": "@tappleby/react-typeahead-component",
++  "name": "st-react-typeahead-component",
+   "description": "Typeahead, written using the React.js library.",
+   "author": "Ezequiel Rodriguez <ezequiel@yahoo.com>",
+   "version": "0.10.0-alpha2",
+@@ -10,6 +10,9 @@
+     "type": "git",
+     "url": "https://github.com/ezequiel/react-typeahead-component.git"
+   },
++  "publishConfig": {
++    "registry": "https://artifactory.smartertravel.net/artifactory/api/npm/npm-local"
++  },
+   "keywords": [
+     "react",
+     "reactjs",
+
+```
+
+##Usage
 This autosuggest requires an implementation of 'src/lib/store/autosuggestStore' passed as a property.
 
 
 
 #### OptionTemplate
-For what is available to the option template see the [readme](https://github.com/smarter-travel-media/react-typeahead-component/blob/master/README.md#reactelement-optiontemplate-required)
+For what is available to the option template see the [readme](https://github.com/tappleby/react-typeahead-component/blob/master/README.md#reactelement-optiontemplate-required)
 ```js
 
 import React from "react";
