@@ -1,26 +1,127 @@
 # st-react-autosuggest
 
 ## Description
-This is a heavily abstracted autosuggest built on 'react-autosuggest'. All properties passed to this component will be passed down to the underlying autosuggest except for 'suggestions' as it is going to be provided by out backing AutosuggestStore.
+This is a heavily abstracted autosuggest built on 'st-react-typeahead-component'. All properties passed to this component will be passed down to the underlying autosuggest except for 'suggestions' as it is going to be provided by out backing AutosuggestStore.
+
+## Updating st-react-typeahead-component
+This component depends on st-react-typeahead-component which is just (a forked repo)[https://github.com/smarter-travel-media/react-typeahead-component] that must be manually published to npm.
+
+To get artifactory access see the `Publishing NPM Module`
+
+- Checkout the repo
+- Make changes and change versions
+- Commit
+- run `npm publish`
 
 ###Usage
 This autosuggest requires an implementation of 'src/lib/store/autosuggestStore' passed as a property.
 
+
+
+#### OptionTemplate
+For what is available to the option template see the [readme](https://github.com/smarter-travel-media/react-typeahead-component/blob/master/README.md#reactelement-optiontemplate-required)
 ```js
-import {AutosuggestUI, AutosuggestStaticStore} from "st-react-autosuggest";
+
+import React from "react";
+export default class OptionsTemplate extends React.Component {
+  render() {
+      var classes = "option-value",
+      optionData = this.props.data;
+      if (this.props.isSelected) {
+        classes += " selected-option";
+      }
+      return (
+          <div>
+              <div className={classes}>
+                  {optionData}
+              </div>
+          </div>
+      );
+  }
+}
+OptionsTemplate.propTypes = {
+  data: React.PropTypes.string,
+  isSelected: React.PropTypes.bool
+};
+
+```
+
+#### AutosuggestStore
+
+```js
+
+import AutosuggestStore from "./autosuggestStore";
+import OptionTemplate from "../ui/static-option-template";
+
+class AutosuggestStaticStore extends AutosuggestStore {
+
+  constructor(locations = ["Boston", "New York", "Miami"]) {
+    super();
+    this.locations = locations;
+  }
+
+  getSuggestion(suggestion, callback) {
+    const regex = new RegExp("^" + suggestion, "i");
+    const suggestions = this.locations.filter(suburb => regex.test(suburb));
+    setTimeout(() => callback(null, suggestions), 300); // Emulate API call
+  }
+
+  getSuggestionTemplate() {
+    return OptionTemplate;
+  }
+
+  getDisplayValue(suggestion) {
+    return suggestion;
+  }
+}
+
+export default AutosuggestStaticStore;
+
+```
+
+## AutosuggestUI
+
+```js
+
+import {AutosuggestUI} from "st-react-autosuggest"
+import AutosuggestStaticStore from ...
 <AutosuggestUI autosuggestStore={new AutosuggestStaticStore()} />
+
 ```
 
 ###Options
+```js
 
-####autosuggestStore {AutoSuggestStore} required
-A js class that extends AutosuggestStore.
+/**
+ * @attribute autosuggestStore
+ * @required
+ * @type {AutosuggestStore}
+ */
+autosuggestStore: React.PropTypes.any.isRequired,
 
-#### suggestionsOnlyOnInputChange {Boolean} optional
-Indicates if suggestions should be shown only when input changes. If it is true, it will only test "showWhen" method if the 
-input value is changed. False will propagate default behavior of underlying auto-suggest.
+/**
+ * @attribute initialSuggestion
+ * @type Suggestion
+ */
+initialSuggestion: React.PropTypes.any,
 
-For a full list of properties that this component supports see the underlying autosuggest [options](https://github.com/moroshko/react-autosuggest#options)
+/**
+ * @attribute focusPlaceholderText
+ * @type String
+ * @default ""
+ */
+focusPlaceholderText: React.PropTypes.string,
+
+/**
+ * @attribute onSelected
+ * @type Function
+ *   @param {Suggestion}
+ *
+ */
+onSelected: React.PropTypes.func
+
+```
+
 
 ## Developing
 Pull down all the devDependencies

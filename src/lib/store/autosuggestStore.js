@@ -2,7 +2,7 @@
  * @module st-react-autosuggest
  */
 /**
- * The base class that any autosuggest store needs to override. This is currently a no-op implementation.
+ * The base class that any autosuggest store needs to override. This is an 'interface'.
  * The autosuggest store should take a locale in the constructor to localize suggestions.
  * @class AutosuggestStore
  */
@@ -20,6 +20,24 @@ class AutosuggestStore {
    */
   getSuggestion(suggestion, callback) {
     callback(new Error("Method not implemented"), null);
+  }
+
+  /**
+   * @method getSuggestionValue
+   * @param {Suggestion} suggestion
+   * @return {React.Component} see https://github.com/ezequiel/react-typeahead-component#reactelement-optiontemplate-required
+   */
+  getSuggestionTemplate() {
+    throw "Method not implemented";
+  }
+
+  /**
+   * @method getDisplayValue
+   * @param {Suggestion} suggestion
+   * @return {String} the display value for the suggestion
+   */
+  getDisplayValue(Suggestion) {
+    throw "Method not implemented";
   }
 }
 

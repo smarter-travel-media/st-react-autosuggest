@@ -2,6 +2,7 @@
  * @module st-react-autosuggest
  */
 import AutosuggestStore from "./autosuggestStore";
+import OptionTemplate from "../ui/static-option-template";
 
 /**
  * This is a sample implementation of an AutosuggestStore. This should never be used in
@@ -36,6 +37,14 @@ class AutosuggestStaticStore extends AutosuggestStore {
     const regex = new RegExp("^" + suggestion, "i");
     const suggestions = this.locations.filter(suburb => regex.test(suburb));
     setTimeout(() => callback(null, suggestions), 300); // Emulate API call
+  }
+
+  getSuggestionTemplate() {
+    return OptionTemplate;
+  }
+
+  getDisplayValue(suggestion) {
+    return suggestion;
   }
 }
 

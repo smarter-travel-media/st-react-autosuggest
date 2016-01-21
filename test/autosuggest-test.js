@@ -1,10 +1,12 @@
-import React from "react/addons";
+import React from "react";
+import TestUtils from "react-addons-test-utils";
+import ReactDOM from "react-dom";
 import chai, {expect} from "chai";
 import sinon from "sinon";
 import sinonChai from "sinon-chai";
-import {AutosuggestUI, AutosuggestStaticStore} from "../src/index";
-import Autosuggest from "react-autosuggest";
-var TestUtils = React.addons.TestUtils;
+import {AutosuggestUI} from "../src/index";
+import AutosuggestStaticStore from "../src/lib/store/autosuggestStaticStore";
+import Autosuggest from "st-react-typeahead-component";
 chai.use(sinonChai);
 
 describe("Autosuggest UI", function () {
@@ -22,42 +24,49 @@ describe("Autosuggest UI", function () {
     const shallowRenderer = TestUtils.createRenderer();
     shallowRenderer.render(React.createElement(AutosuggestUI, {"autosuggestStore": new AutosuggestStaticStore()}));
     var output = shallowRenderer.getRenderOutput();
-    expect(output.type).to.equal(Autosuggest);
+    expect(output.props.children.type).to.equal(Autosuggest);
+  });
+
+  it("Should render with initialSuggestion", function () {
+    var div = document.createElement('div');
+    var typeaheadInstance = ReactDOM.render(
+            <AutosuggestUI
+                initialSuggestion='Miami'
+                autosuggestStore={new AutosuggestStaticStore()}
+            />,
+            div
+        );
+
+    expect(typeaheadInstance.state.input).to.equal("Miami");
+    expect(typeaheadInstance.state.options).to.deep.equal([]);
+  });
+
+  it("Focus should clear current value and blur should restore it", function () {
+    var div = document.createElement('div');
+    var typeaheadInstance = ReactDOM.render(
+            <AutosuggestUI
+                initialSuggestion='Miami'
+                autosuggestStore={new AutosuggestStaticStore()}
+            />,
+            div
+        );
+
+    // The hint should be visible at this point.
+    expect(typeaheadInstance.state.input).to.equal("Miami");
+    expect(typeaheadInstance.state.options).to.deep.equal([]);
+
+    var input = TestUtils.findRenderedDOMComponentWithClass(typeaheadInstance, "react-typeahead-usertext");
+    TestUtils.Simulate.focus(input);
+
+    expect(typeaheadInstance.state.input).to.equal("");
+    expect(typeaheadInstance.state.options).to.deep.equal([]);
+
+    TestUtils.Simulate.blur(input);
+
+    expect(typeaheadInstance.state.input).to.equal("Miami");
+    expect(typeaheadInstance.state.options).to.deep.equal([]);
+
   });
 
 
-  it("Should skip showWhen when value is not changed", function () {
-    const shallowRenderer = TestUtils.createRenderer();
-
-    var showWhen = sinon.spy();
-
-    shallowRenderer.render(React.createElement(AutosuggestUI, {"showWhen": showWhen, "suggestionsOnlyOnInputChange": true, "value": "test values", "autosuggestStore": new AutosuggestStaticStore()}));
-    var output = shallowRenderer.getRenderOutput();
-    TestUtils.Simulate.focus(output);
-    expect(showWhen).to.have.callCount(0);
-  });
-
-  it("Should not skip showWhen even when value is not changed with suggestionsOnlyOnInputChange set to false", function () {
-    const shallowRenderer = TestUtils.createRenderer();
-
-    var showWhen = sinon.spy();
-
-    shallowRenderer.render(React.createElement(AutosuggestUI, {"showWhen": showWhen, "suggestionsOnlyOnInputChange": false, "value": "test values", "autosuggestStore": new AutosuggestStaticStore()}));
-    var output = shallowRenderer.getRenderOutput();
-    TestUtils.Simulate.focus(output);
-
-    expect(showWhen).to.have.callCount(1);
-  });
-
-  it("Should skip showWhen when focused", function () {
-    const shallowRenderer = TestUtils.createRenderer();
-
-    var showWhen = sinon.spy();
-
-    shallowRenderer.render(React.createElement(AutosuggestUI, {"showWhen": showWhen, "suggestionsOnlyOnInputChange": true, "autosuggestStore": new AutosuggestStaticStore()}));
-    var output = shallowRenderer.getRenderOutput();
-    TestUtils.Simulate.focus(output);
-
-    expect(showWhen).to.have.callCount(0);
-  });
 });
