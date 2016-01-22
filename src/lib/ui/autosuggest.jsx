@@ -6,8 +6,7 @@ import Autosuggest from "st-react-typeahead-component";
 
 /**
  * This is the ui for the autosuggest. It requires a backing store as a property upon
- * being mounted. Any other properties to its underlying component react-autosuggest
- * will be passed along.
+ * being mounted.
  * @class AutosuggestUI
  */
 
@@ -18,7 +17,8 @@ class AutosuggestUI extends React.Component {
     this.state = {
       input: this.props.autosuggestStore.getDisplayValue(this.props.initialSuggestion),
       options: [],
-      currentlySelected: null
+      currentlySelected: null,
+      justSelected: false
     };
   }
 
@@ -100,7 +100,8 @@ class AutosuggestUI extends React.Component {
     if (this.state.currentlySelected) {
       this.props.onSelected(this.state.currentlySelected);
       this.setState({
-        currentlySelected: null
+        currentlySelected: null,
+        justSelected: true
       });
     }
   }
@@ -118,9 +119,20 @@ class AutosuggestUI extends React.Component {
   handleOptionClick(event, option) {
     this.setInputValue(this.props.autosuggestStore.getDisplayValue(option));
     this.props.onSelected(option);
+    this.setState({
+      justSelected: true
+    });
   }
 
   onFocus(evt) {
+    if (this.state.justSelected) {
+      this.setState({
+        justSelected: false
+      });
+
+      return;
+    }
+
     var value = evt.target.value;
     this.setState({
       input: this.props.focusPlaceholderText,
