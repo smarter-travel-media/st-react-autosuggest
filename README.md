@@ -45,7 +45,25 @@ index e5a5756..2dfe69c 100644
 ##Usage
 This autosuggest requires an implementation of 'src/lib/store/autosuggestStore' passed as a property.
 
+### IE9 and FF Fixes
+IE9 has an issue where the disabled input still gets the click / focus event even if it is underneath the
+active input. FF has an issue where the active input is not positioned correctly. Here is some css that
+fixes the issues:
 
+```css
+input.react-typeahead-input.react-typeahead-hint {
+  opacity: 1;
+  z-index: 0;
+  left: -9999999999px;
+}
+input.react-typeahead-input.react-typeahead-usertext {
+  top: 0;
+  right: 0;
+  z-index: 1;
+  position: absolute !important;
+  background-color: #fff !important;
+}
+```
 
 #### OptionTemplate
 For what is available to the option template see the [readme](https://github.com/fumblesandfriends/react-typeahead-component/blob/master/README.md#reactelement-optiontemplate-required)
