@@ -2,6 +2,7 @@
  * @module st-react-autosuggest
  */
 import React from "react";
+import ReactDOM from "react-dom";
 import Autosuggest from "st-react-typeahead-component";
 
 /**
@@ -102,8 +103,12 @@ class AutosuggestUI extends React.Component {
       this.setState({
         currentlySelected: null,
         justSelected: true
-      });
+      }, this.postSelect);
     }
+  }
+
+  postSelect() {
+    ReactDOM.findDOMNode(this.refs.typeahead.refs.input).blur();
   }
 
   handleOptionChange(event, option, index) {
@@ -121,7 +126,7 @@ class AutosuggestUI extends React.Component {
     this.props.onSelected(option);
     this.setState({
       justSelected: true
-    });
+    }, this.postSelect);
   }
 
   onFocus(evt) {
@@ -142,6 +147,9 @@ class AutosuggestUI extends React.Component {
   }
 
   onBlur(evt) {
+    this.setState({
+      justSelected: false
+    });
     if (evt.target.value === this.props.focusPlaceholderText) {
       this.setState({
         input: this.state.lastValueBeforeFocus,

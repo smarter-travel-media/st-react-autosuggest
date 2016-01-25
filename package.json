@@ -5,7 +5,7 @@
   "author": "SmarterTravel",
   "main": "index.js",
   "dependencies": {
-    "st-react-typeahead-component": "1.0.2"
+    "st-react-typeahead-component": "1.0.3"
   },
   "peerDependencies": {
     "react": "^0.14.3",

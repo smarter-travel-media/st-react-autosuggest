@@ -1,3 +1,7 @@
+## 2.0.3 (2016-01-25)
+
+- Fixed issue where focus does not clear the input directly after an option was selected
+
 ## 2.0.2 (2016-01-22)
 
 - Updated st-react-typeahead-component: IE Fixes where the focus event breaks the onOptionClick function
